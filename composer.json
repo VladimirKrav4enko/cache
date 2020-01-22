@@ -1,23 +1,21 @@
 {
-  "name": "icorelab/cache",
-  "description": "Convenient caching for any php project",
-  "version": "1.0.0",
-  "type": "library",
-  "keywords": [],
-  "license": "LGPL-3.0-only",
-  "authors": [
-    {
-      "name": "vladimirc",
-      "email": "vladimir.krav4enko@gmail.com"
+    "name": "icorelab/cache",
+    "description": "caching for any php project",
+    "type": "library",
+    "require-dev": {
+        "php": ">=5.4.0"
+    },
+    "authors": [
+        {
+            "name": "Vladimir Cravcenco",
+            "email": "vladimirc@wmsolution.org"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "classmap": ["src"]
     }
-  ],
-  "require": {
-    "php": ">=5.4.0"
-  },
-  "provide": {
-    "icorelab/cache": "1.0.0"
-  },
-  "autoload": {
-    "files": ["autoload.php"]
-  }
 }
