@@ -2,6 +2,7 @@
   "name": "icorelab/cache",
   "description": "Convenient caching for any php project",
   "version": "1.0.0",
+  "type": "library",
   "keywords": [],
   "license": "GNU",
   "authors": [
@@ -14,7 +15,10 @@
   "require": {
     "php": ">=5.4.0"
   },
+  "provide": {
+    "icorelab/cache": "1.0.0"
+  },
   "autoload": {
-    "files": ["./autoload.php"]
+    "files": ["autoload.php"]
   }
 }
