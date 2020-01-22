@@ -96,7 +96,7 @@ class FileCache implements CacheInterface{
         // Если дирректория не была созданна ранее
         if(!is_dir($dir)){
             // Создаем дирректорию
-           mkdir($dir, $this->dirsMode, true);
+            mkdir($dir, $this->dirsMode, true);
         }
 
         // Если существует дирректория и файл успешно записан
@@ -194,29 +194,29 @@ class FileCache implements CacheInterface{
             // Перебираем массив, каждый элемент массива кроме последнего будет являться подпапкой
             foreach ($key as $item){
                 // Если ключ является строкой
-               if(is_string($item)){
-                   // Очищаем строку от символов которые могут нарушить корректность пути
-                   $item = preg_replace( '/[^A-Za-z0-9\_\-]/', '', $item );
-                   // Если это последний элемент массива
-                   if(!next($key)){
-                       // Считаем элемент именем файла
-                       $item = md5($item) . $this->cacheFileSuffix;
-                   }
+                if(is_string($item)){
+                    // Очищаем строку от символов которые могут нарушить корректность пути
+                    $item = preg_replace( '/[^A-Za-z0-9\_\-]/', '', $item );
+                    // Если это последний элемент массива
+                    if(!next($key)){
+                        // Считаем элемент именем файла
+                        $item = md5($item) . $this->cacheFileSuffix;
+                    }
 
-                   // Дополняем путь
-                   $path .= DIRECTORY_SEPARATOR . $item;
-               }elseif (is_array($item) or is_object($item)){ // Если ключ является массивом
-                   // Преобразуем массив в json строку, и хэшируем в md5
-                   $item = md5(json_encode($item));
-                   // Если это последний элемент массива
-                   if(!next($key)){
-                       // Считаем элемент именем файла
-                       $item .= $this->cacheFileSuffix;
-                   }
+                    // Дополняем путь
+                    $path .= DIRECTORY_SEPARATOR . $item;
+                }elseif (is_array($item) or is_object($item)){ // Если ключ является массивом
+                    // Преобразуем массив в json строку, и хэшируем в md5
+                    $item = md5(json_encode($item));
+                    // Если это последний элемент массива
+                    if(!next($key)){
+                        // Считаем элемент именем файла
+                        $item .= $this->cacheFileSuffix;
+                    }
 
-                   // Дополняем путь
-                   $path .= DIRECTORY_SEPARATOR . $item;
-               }
+                    // Дополняем путь
+                    $path .= DIRECTORY_SEPARATOR . $item;
+                }
             }
         }else{ // Если ключ не массив и не строка
             // Вернем исключение
@@ -244,18 +244,18 @@ class FileCache implements CacheInterface{
             // Перебираем массив, каждый элемент массива кроме последнего будет являться подпапкой
             foreach ($key as $item){
                 // Если ключ является строкой или числом
-               if(is_string($item) or is_int($item)){
-                   // Очищаем строку от символов которые могут нарушить корректность пути
-                   $item = preg_replace( '/[^A-Za-z0-9\_\-]/', '', $item );
-                   // Дополняем путь
-                   $path .= DIRECTORY_SEPARATOR . $item;
-               }elseif (is_array($item) or is_object($item)){ // Если ключ является массивом
-                   // Преобразуем массив в json строку, и хэшируем в md5
-                   $item = md5(json_encode($item));
+                if(is_string($item) or is_int($item)){
+                    // Очищаем строку от символов которые могут нарушить корректность пути
+                    $item = preg_replace( '/[^A-Za-z0-9\_\-]/', '', $item );
+                    // Дополняем путь
+                    $path .= DIRECTORY_SEPARATOR . $item;
+                }elseif (is_array($item) or is_object($item)){ // Если ключ является массивом
+                    // Преобразуем массив в json строку, и хэшируем в md5
+                    $item = md5(json_encode($item));
 
-                   // Дополняем путь
-                   $path .= DIRECTORY_SEPARATOR . $item;
-               }
+                    // Дополняем путь
+                    $path .= DIRECTORY_SEPARATOR . $item;
+                }
             }
         }else{ // Если ключ не массив и не строка
             // Вернем исключение
@@ -330,7 +330,5 @@ class FileCache implements CacheInterface{
             closedir($handle);
         }
     }
-
-
 
 }

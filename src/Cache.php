@@ -30,12 +30,12 @@ class Cache{
 
     private $cache              = null; // Объект класса который будет использоваться для кэширования
     private $blockCacheParams   = null; // Параметры для кэширования блока beginCache/endCache
-    private $defaultCacheType   = 'FileCache'; // Класс для работы с кэшем по умолчанию
+    private $defaultCacheType   = '\Icorelab\Cache\FileCache'; // Класс для работы с кэшем по умолчанию
 
     /**
      * Cache constructor.
      * @param string $cacheClass Имя класса который, будет использоваться для кэширования
-     * @throws Exception
+     * @throws \Exception
      */
     public function __construct($cacheClass = '')
     {
@@ -45,8 +45,10 @@ class Cache{
             $cacheClass = $this->defaultCacheType;
         }
 
+        $fileCache = new FileCache();
+
         // Если класс не найден
-        if(!class_exists("\Icorelab\Cache\{$cacheClass}")){
+        if(!class_exists($cacheClass)){
             // Вернем исключение
             throw new \Exception("Class $cacheClass not found");
         }
@@ -65,8 +67,8 @@ class Cache{
      * Фабрика экземпляров класса.
      *
      * @param string $cacheClass
-     * @return Cache
-     * @throws Exception
+     * @return Cache|CacheInterface
+     * @throws \Exception
      */
     public static function factory( $cacheClass = '' ) {
         return new Cache( $cacheClass );
@@ -95,7 +97,7 @@ class Cache{
      * @param int $duration
      * @param null $dependency
      * @return mixed
-     * @throws Exception
+     * @throws \Exception
      */
     public function set($key, $value, $duration = 0, $dependency = null){
 
@@ -160,7 +162,7 @@ class Cache{
      * @param void $dependency      Зависимости
      *
      * @return mixed
-     * @throws Exception
+     * @throws \Exception
      */
     public function getOrSet($key, $callable, $duration = 0, $dependency = null){
         // Если значение нашлось в кэше
@@ -202,7 +204,7 @@ class Cache{
      * @param int $duration
      * @param null $dependency
      * @return bool|mixed
-     * @throws Exception
+     * @throws \Exception
      */
     public function add($key, $value, $duration = 0, $dependency = null)
     {
@@ -240,7 +242,7 @@ class Cache{
     /**
      * Кэширование участка кода. Конец
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function endCache(){
         // Получаем содержимое буфера, и закрываем его
