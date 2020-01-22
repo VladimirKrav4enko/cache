@@ -15,7 +15,7 @@ class DbDependency extends Dependency{
      *
      * DbDependency constructor.
      * @param array $params
-     * @throws Exception
+     * @throws \Exception
      */
     public function __construct(array $params)
     {
@@ -24,7 +24,7 @@ class DbDependency extends Dependency{
             $this->sql = $params['sql'];
         }else{ // Если парамерт sql не передан или пуст
             // Вернем исключение
-            throw new Exception('Parameter "sql" is required');
+            throw new \Exception('Parameter "sql" is required');
         }
 
     }

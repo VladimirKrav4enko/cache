@@ -43,7 +43,7 @@ class FileCache implements CacheInterface{
      *
      * @param array|string $key
      * @return bool|mixed|string
-     * @throws Exception
+     * @throws \Exception
      */
     public function getValue($key)
     {
@@ -74,7 +74,7 @@ class FileCache implements CacheInterface{
      * @param $value
      * @param int $duration
      * @return mixed|void
-     * @throws Exception
+     * @throws \Exception
      */
     public function setValue($key, $value, $duration = 0)
     {
@@ -119,7 +119,7 @@ class FileCache implements CacheInterface{
         // Если файл так и не удлось создать, получим последнюю ошибку
         $error = error_get_last();
         // Возвращаем исключение
-        throw new Exception("Could not create cache file '{$cacheFile}': {$error['message']}");
+        throw new \Exception("Could not create cache file '{$cacheFile}': {$error['message']}");
 
         return false;
     }
@@ -130,7 +130,7 @@ class FileCache implements CacheInterface{
      * @param array|string $key
      * @param bool $expiredOnly
      * @return bool|mixed
-     * @throws Exception
+     * @throws \Exception
      */
     public function delete($key, $expiredOnly = false)
     {
@@ -150,7 +150,7 @@ class FileCache implements CacheInterface{
     /**
      * @param bool $expiredOnly
      * @return bool|mixed
-     * @throws Exception
+     * @throws \Exception
      */
     public function flush($expiredOnly = false)
     {
@@ -163,7 +163,7 @@ class FileCache implements CacheInterface{
      * Проверяет существует ли актуальный кэш, по ключу $key
      * @param string|array $key
      * @return bool|mixed
-     * @throws Exception
+     * @throws \Exception
      */
     public function exists($key)
     {
@@ -177,7 +177,7 @@ class FileCache implements CacheInterface{
      *
      * @param $key
      * @return bool|string
-     * @throws Exception
+     * @throws \Exception
      */
     private function getCacheFile($key){
 
@@ -220,7 +220,7 @@ class FileCache implements CacheInterface{
             }
         }else{ // Если ключ не массив и не строка
             // Вернем исключение
-            throw new Exception("Incorrect cache key type");
+            throw new \Exception("Incorrect cache key type");
         }
 
         return $path;
@@ -231,7 +231,7 @@ class FileCache implements CacheInterface{
      *
      * @param $key
      * @return string
-     * @throws Exception
+     * @throws \Exception
      */
     private function getCacheDir($key){
 
@@ -259,7 +259,7 @@ class FileCache implements CacheInterface{
             }
         }else{ // Если ключ не массив и не строка
             // Вернем исключение
-            throw new Exception("Incorrect cache key type");
+            throw new \Exception("Incorrect cache key type");
         }
 
         return $path . DIRECTORY_SEPARATOR;
@@ -270,7 +270,7 @@ class FileCache implements CacheInterface{
      *
      * @param bool $force
      * @param bool $expiredOnly
-     * @throws Exception
+     * @throws \Exception
      */
     private function cc($force = false, $expiredOnly = true)
     {
@@ -290,7 +290,7 @@ class FileCache implements CacheInterface{
      *
      * @param $path
      * @param $expiredOnly
-     * @throws Exception
+     * @throws \Exception
      */
     private function clearCache($path, $expiredOnly = true){
 
@@ -314,7 +314,7 @@ class FileCache implements CacheInterface{
                         if (!@rmdir($fullPath)) {
                             // Возвращаем исключение
                             $error = error_get_last();
-                            throw new Exception("Unable to remove directory '{$fullPath}': {$error['message']}");
+                            throw new \Exception("Unable to remove directory '{$fullPath}': {$error['message']}");
                         }
                     }
                 } elseif (!$expiredOnly || $expiredOnly && @filemtime($fullPath) < time()) { // Если элемент является файлом
@@ -322,7 +322,7 @@ class FileCache implements CacheInterface{
                     if (!@unlink($fullPath)) {
                         // Возвращаем исключение
                         $error = error_get_last();
-                        throw new Exception("Unable to remove file '{$fullPath}': {$error['message']}", __METHOD__);
+                        throw new \Exception("Unable to remove file '{$fullPath}': {$error['message']}", __METHOD__);
                     }
                 }
             }

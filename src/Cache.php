@@ -34,7 +34,7 @@ class Cache{
     /**
      * Cache constructor.
      * @param string $cacheClass Имя класса который, будет использоваться для кэширования
-     * @throws Exception
+     * @throws \Exception
      */
     public function __construct($cacheClass = '')
     {
@@ -47,7 +47,7 @@ class Cache{
         // Если класс не найден
         if(!class_exists($cacheClass)){
             // Вернем исключение
-            throw new Exception("Class $cacheClass not found");
+            throw new \Exception("Class $cacheClass not found");
         }
 
         // Создаем объект который будет использоваться для кэширования
@@ -56,7 +56,7 @@ class Cache{
         // Если объект cache не реализует интерфейс CacheInterface
         if(!($this->cache instanceof CacheInterface)){
             // Вернем исключение
-            throw new Exception("Class $cacheClass not instanceof CacheInterface");
+            throw new \Exception("Class $cacheClass not instanceof CacheInterface");
         }
     }
 
@@ -65,7 +65,7 @@ class Cache{
      *
      * @param string $cacheClass
      * @return Cache
-     * @throws Exception
+     * @throws \Exception
      */
     public static function factory( $cacheClass = '' ) {
         return new Cache( $cacheClass );
@@ -94,7 +94,7 @@ class Cache{
      * @param int $duration
      * @param null $dependency
      * @return mixed
-     * @throws Exception
+     * @throws \Exception
      */
     public function set($key, $value, $duration = 0, $dependency = null){
 
@@ -106,7 +106,7 @@ class Cache{
                 $dependency->evaluateDependency($this);
             }else{ // Если зависимость не является экземпларом класса Dependency
                 // Вернем исключение
-                throw new Exception('Dependency object, not instance of Dependency abstract class');
+                throw new \Exception('Dependency object, not instance of Dependency abstract class');
             }
         }
 
@@ -159,7 +159,7 @@ class Cache{
      * @param void $dependency      Зависимости
      *
      * @return mixed
-     * @throws Exception
+     * @throws \Exception
      */
     public function getOrSet($key, $callable, $duration = 0, $dependency = null){
         // Если значение нашлось в кэше
@@ -174,7 +174,7 @@ class Cache{
         // Если не удалось занести в кэш новое значение
         if (!$this->set($key, $value, $duration, $dependency)){
             // Вернем исключение
-            throw new Exception('Failed to set cache value for key ' . json_encode($key), __METHOD__);
+            throw new \Exception('Failed to set cache value for key ' . json_encode($key), __METHOD__);
         }
 
         return $value;
@@ -201,7 +201,7 @@ class Cache{
      * @param int $duration
      * @param null $dependency
      * @return bool|mixed
-     * @throws Exception
+     * @throws \Exception
      */
     public function add($key, $value, $duration = 0, $dependency = null)
     {
@@ -239,7 +239,7 @@ class Cache{
     /**
      * Кэширование участка кода. Конец
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function endCache(){
         // Получаем содержимое буфера, и закрываем его
@@ -247,7 +247,7 @@ class Cache{
 
         // Если параметры не определенны
         if(!$this->blockCacheParams){
-            throw new Exception('At first you must call the method beginCache');
+            throw new \Exception('At first you must call the method beginCache');
         }
 
         // Получаем ранее сохраненные параметры
