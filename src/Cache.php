@@ -30,22 +30,23 @@ class Cache{
 
     private $cache              = null; // Объект класса который будет использоваться для кэширования
     private $blockCacheParams   = null; // Параметры для кэширования блока beginCache/endCache
+    private $defaultCacheType   = 'FileCache'; // Класс для работы с кэшем по умолчанию
 
     /**
      * Cache constructor.
      * @param string $cacheClass Имя класса который, будет использоваться для кэширования
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct($cacheClass = '')
     {
         // Если не передан класс для кэширования, но в конфигурациях объявленна константа с классом по умолчанию
-        if(!$cacheClass && defined('DEFAULT_CACHE')){
+        if(!$cacheClass && $this->defaultCacheType){
             // Используем класс по умолчанию
-            $cacheClass = DEFAULT_CACHE;
+            $cacheClass = $this->defaultCacheType;
         }
 
         // Если класс не найден
-        if(!class_exists($cacheClass)){
+        if(!class_exists("\Icorelab\Cache\{$cacheClass}")){
             // Вернем исключение
             throw new \Exception("Class $cacheClass not found");
         }
@@ -65,7 +66,7 @@ class Cache{
      *
      * @param string $cacheClass
      * @return Cache
-     * @throws \Exception
+     * @throws Exception
      */
     public static function factory( $cacheClass = '' ) {
         return new Cache( $cacheClass );
@@ -94,7 +95,7 @@ class Cache{
      * @param int $duration
      * @param null $dependency
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function set($key, $value, $duration = 0, $dependency = null){
 
@@ -159,7 +160,7 @@ class Cache{
      * @param void $dependency      Зависимости
      *
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function getOrSet($key, $callable, $duration = 0, $dependency = null){
         // Если значение нашлось в кэше
@@ -201,7 +202,7 @@ class Cache{
      * @param int $duration
      * @param null $dependency
      * @return bool|mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function add($key, $value, $duration = 0, $dependency = null)
     {
@@ -239,7 +240,7 @@ class Cache{
     /**
      * Кэширование участка кода. Конец
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function endCache(){
         // Получаем содержимое буфера, и закрываем его

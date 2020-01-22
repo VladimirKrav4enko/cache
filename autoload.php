@@ -6,7 +6,7 @@ class Autoloader
     const debug = 0;
     const ROOT = __DIR__."/";
     protected static $autoloadDirs = [
-        'classes',
+        'src',
     ];
 
     /**
