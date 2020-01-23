@@ -23,14 +23,14 @@ namespace Icorelab\Cache;
  *  }, 360, $dependency);
  *
  *
- * Class Cache
+ * Class MCache
  * @property CacheInterface $cache
  */
-class Cache{
+class MCache{
 
     private $cache              = null; // Объект класса который будет использоваться для кэширования
     private $blockCacheParams   = null; // Параметры для кэширования блока beginCache/endCache
-    private $defaultCacheType   = '\Icorelab\Cache\FileCache'; // Класс для работы с кэшем по умолчанию
+    private $defaultCacheType   = 'FileCache'; // Класс для работы с кэшем по умолчанию
 
     /**
      * Cache constructor.
@@ -45,16 +45,14 @@ class Cache{
             $cacheClass = $this->defaultCacheType;
         }
 
-        $fileCache = new FileCache();
-
-        // Если класс не найден
-        if(!class_exists($cacheClass)){
+        try{
+            // Создаем объект который будет использоваться для кэширования
+            $cacheClass = "\Icorelab\Cache\\$cacheClass";
+            $this->cache = new $cacheClass();
+        }catch (\Exception $exception){
             // Вернем исключение
             throw new \Exception("Class $cacheClass not found");
         }
-
-        // Создаем объект который будет использоваться для кэширования
-        $this->cache = new $cacheClass();
 
         // Если объект cache не реализует интерфейс CacheInterface
         if(!($this->cache instanceof CacheInterface)){
@@ -67,11 +65,11 @@ class Cache{
      * Фабрика экземпляров класса.
      *
      * @param string $cacheClass
-     * @return Cache|CacheInterface
+     * @return MCache|CacheInterface
      * @throws \Exception
      */
     public static function factory( $cacheClass = '' ) {
-        return new Cache( $cacheClass );
+        return new MCache( $cacheClass );
     }
 
     /**
